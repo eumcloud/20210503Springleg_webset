@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jin.MyBatis.IHomeDao">
+<insert id="Insert" parameterType="com.jin.MyBatis.Person">
+INSERT INTO person(ID, FIRSTNAME, LASTNAME)
+VALUES(#{id,jdbcType=NUMERIC},#{firstname,jdbcType=VARCHAR},#{lastname,jdbcType=VARCHAR})
+</insert>
+<select id="SelectAll" resultType="com.jin.MyBatis.Person">
+SELECT * FROM person
+</select>
+<select id="SelectPart" parameterType="String" resultType="com.jin.MyBatis.Person">
+SELECT * FROM PERSON
+WHERE id=#{id}
+</select>
+
+<update id="Modify" parameterType="map">
+UPDATE PERSON
+SET firstName = #{fn}, lastName = #{ln}
+WHERE id = #{id}
+</update>
+
+</mapper>
+
+
+
+
+
+
+
+
