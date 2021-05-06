@@ -7,7 +7,12 @@ SELECT COUNT(*) FROM login WHERE ID=#{id}
 </select>
 
 <insert id="InsertLogin" parameterType="com.jin.Membership.Login" >
-insert into login (id, pw) values (#{id}, #{pw});
+insert into login (id, pw) values (#{id}, #{pw})
+</insert>
+
+<insert id="InsertMember" parameterType="com.jin.Membership.Member" >
+INSERT INTO Member (id, gender,  email) VALUES (#{id},  #{gender}, #{email}
+insert into login (id, pw) values (#{id}, #{pw})
 </insert>
 
 

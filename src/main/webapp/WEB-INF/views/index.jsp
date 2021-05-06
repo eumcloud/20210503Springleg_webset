@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="home" value="/">
+<c:set var="home" value="/"  />
 
 <html>
 <body>
@@ -17,6 +17,6 @@
 </tr>
 </table>
 </div>
-</c:set>
+
 </body>
 </html>

@@ -74,15 +74,16 @@ public class MemberServiceImpl implements IMemberService{
 		login.setId(member.getId());
 		login.setPw(sha.encryptSHA512(member.getPw()));
 				
-		Login login = member; //Login이라는 틀에 member안의 login에대한 값만 상속받은 상위클래스로 전달한다.
+		//Login login = member; //Login이라는 틀에 member안의 login에대한 값만 상속받은 상위클래스로 전달한다.
 		iMemberDao.InsertLogin(login);
 		
+		String gender = member.getGender();
+		if(!"n".contentEquals(gender)) {
+			iMemberDao.InsertMember(member);
+		}
+			
+		
 	}
- //LoginDTO를 상속받은 Memberdto로 입력받아 온 값을 다시 SHA하여 LoginDTO로 넣어준다. 
-
-	
-	
-	
-	
+ //LoginDTO를 상속받은 Memberdto로 입력받아 온 값을 다시 SHA하여 LoginDTO로 넣어준다. 	
 
 }

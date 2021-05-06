@@ -7,4 +7,7 @@ public interface IMemberDao {
 	public void InsertLogin(String id, String pw);
 
 	public void InsertLogin(Login login);
+//	public void InsertLogin(Member member);
+
+	public void InsertMember(Member member);
 }

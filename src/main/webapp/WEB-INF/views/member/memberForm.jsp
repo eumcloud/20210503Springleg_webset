@@ -4,10 +4,14 @@
 <c:url var="home" value="/"/>
 
 <center>
-<h3><font color="red">${msg }</font></h3>
-<h3><font color="red">home : ${home }</font></h3>
-<h3><font color="red">home : ${home2 }</font></h3>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js">
+function SearchPostCode(cmd){
+	window.name = "우편번호 검색";
+	var option = "top=500, left=500, width=400, height=400";
+	window.open = (cmd, "_blank", option);
+}
+</script>
 <form action="memberProc" method="post">
 
 <h3>${authNumOk }</h3>
@@ -50,7 +54,7 @@
 		<td>
 			<input type=text name='zipcode' readonly="readonly"/> 
 		</td>
-		<td colspan="2"><button >우편번호 검색</button></td>
+		<td colspan="2"><input type="button" value="우편번호 검색" onclick="SerachPostCode(${home}login);"></td>
 	</tr>
 	<tr>
 		<td align='right'>주소</td>
