@@ -1,70 +1,46 @@
 package com.jin.Membership;
 
-//회원정보 
-public class Member {
-
- // 순번 
- private Integer no;
-
- // 우편번호 
- private String zipcode;
-
- // 주소 
- private String add1;
-
- // 상세주소 
- private String add2;
+//맴버옵션 
+public class Member extends Login{
 
  // 아이디 
- private String id;
+// private String id;
 
- public Integer getNo() {
-     return no;
+ // 성별 
+ private String gender;
+
+ // 이메일 
+ private String email;
+
+// public String getId() {
+//     return id;
+// }
+//
+// public void setId(String id) {
+//     this.id = id;
+// }
+
+ public String getGender() {
+     return gender;
  }
 
- public void setNo(Integer no) {
-     this.no = no;
+ public void setGender(String gender) {
+     this.gender = gender;
  }
 
- public String getZipcode() {
-     return zipcode;
+ public String getEmail() {
+     return email;
  }
 
- public void setZipcode(String zipcode) {
-     this.zipcode = zipcode;
- }
-
- public String getAdd1() {
-     return add1;
- }
-
- public void setAdd1(String add1) {
-     this.add1 = add1;
- }
-
- public String getAdd2() {
-     return add2;
- }
-
- public void setAdd2(String add2) {
-     this.add2 = add2;
- }
-
- public String getId() {
-     return id;
- }
-
- public void setId(String id) {
-     this.id = id;
+ public void setEmail(String email) {
+     this.email = email;
  }
 
  // Member 모델 복사
  public void CopyData(Member param)
  {
-     this.no = param.getNo();
-     this.zipcode = param.getZipcode();
-     this.add1 = param.getAdd1();
-     this.add2 = param.getAdd2();
-     this.id = param.getId();
+//     this.id = param.getId();
+     this.gender = param.getGender();
+     this.email = param.getEmail();
  }
 }

@@ -25,7 +25,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.jin.web" />
+	<context:component-scan base-package="com.jin.Membership" />
+	<context:component-scan base-package="com.jin.WebPage" />
 	
 	
 	

@@ -18,6 +18,7 @@
 	p:username="${jdbc.username}"
 	p:password="${jdbc.password}"
 	/>
+	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
 	id="sqlSessionFactoryBean"
 	p:dataSource-ref="dataSource"
@@ -26,7 +27,7 @@
 	
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean"
 	id="mapperFactoryBean"
-	p:mapperInterface="com.jin.MyBatis.IHomeDao"
+	p:mapperInterface="com.jin.Membership.IMemberDao"
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"
 	/>
 </beans>
