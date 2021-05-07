@@ -16,7 +16,11 @@ insert into login (id, pw) values (#{id}, #{pw})
 </insert>
 
 
-
+<select id="SearchZipcode" parameterType="com.jin.Membership.Zipcode">
+SELECT * FROM zipcode
+WHERE DONG like '%'||#{dong}||'%'
+OR DORO like '%'||#{doro}||'%'
+</select>
 
 <!-- <insert id="Insert" parameterType="com.jin.MyBatis.Person">
 INSERT INTO person(ID, FIRSTNAME, LASTNAME)

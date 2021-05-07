@@ -1,5 +1,7 @@
 package com.jin.Membership;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +74,16 @@ public class MemberController {
 		return "forward:/index?formpath=member";
 	}
 	
+	@RequestMapping(value="searchZipcode")
+	public String searchZipcode(Model model,
+					@RequestParam String addr
+			) {
+		logger.warn(addr); //값은 잘 받아지나 인코딩이 안되서 깨짐
+		
+		List<Zipcode> zipcodelst = iServ.Searchzipcode(addr);
+		model.addAttribute("zipcodelst", zipcodelst);
+
+		return "member/SearchPostCode";
+	}
 	
 }

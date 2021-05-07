@@ -11,6 +11,13 @@ function SearchPostCode(cmd){
 	var option = "top=500, left=500, width=400, height=400";
 	window.open = (cmd, "_blank", option);
 }
+
+function popup(url, name){
+	var option = "top=500, left=500, width=400, height=400";
+	window.name = name;
+	window.open = (url, "_blank", option);
+	
+}
 </script>
 <form action="memberProc" method="post">
 
@@ -52,14 +59,14 @@ function SearchPostCode(cmd){
 	<tr>
 		<td align='right'>우편번호</td>
 		<td>
-			<input type=text name='zipcode' readonly="readonly"/> 
+			<input type=text name='zipcode' id="zipcode" readonly="readonly"/> 
 		</td>
-		<td colspan="2"><input type="button" value="우편번호 검색" onclick="SerachPostCode(${home}login);"></td>
+		<td colspan="2"><input type="button" value="우편번호 검색" onclick="SerachPostCode(${home}member/SearchPostCode);"></td>
 	</tr>
 	<tr>
 		<td align='right'>주소</td>
 		<td colspan="3">
-			<input type=text name='addr1' readonly="readonly" style="width: 475px; "/> 
+			<input type=text name='addr1' id="addr1" readonly="readonly" style="width: 475px; "/> 
 		</td>
 	</tr>
 	<tr>

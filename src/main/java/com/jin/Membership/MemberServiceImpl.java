@@ -1,5 +1,7 @@
 package com.jin.Membership;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -85,5 +87,22 @@ public class MemberServiceImpl implements IMemberService{
 		
 	}
  //LoginDTO를 상속받은 Memberdto로 입력받아 온 값을 다시 SHA하여 LoginDTO로 넣어준다. 	
+
+	
+	
+	@Override
+	public List<Zipcode> Searchzipcode(String addr) {
+		
+		return iMemberDao.SearchZipcode(addr);
+	}
+
+
+	
+
+
+
+
+
+
 
 }
