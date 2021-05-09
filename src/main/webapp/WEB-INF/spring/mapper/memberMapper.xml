@@ -4,7 +4,7 @@
 
 <insert id="Insertostcode" parameterType="com.jin.Membership.Postcode">
 <selectKey keyProperty="no" resultType="int" order="BEFORE">
-select NVL(max(no), 0)+1 from FROM postcode
+select NVL(max(no), 0)+1  FROM postcode
 </selectKey>
 INSERT INTO PostCode  (zipcode, add1, add2, id)
 VALUES ('${no}"${zipcode}', '${addr1}', '${addr2}', '${id}')

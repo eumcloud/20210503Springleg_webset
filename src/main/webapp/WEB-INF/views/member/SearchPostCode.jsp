@@ -32,7 +32,22 @@ onclick="setParentAddr('${zipcode}', '${address }');">
 ${zipcode}===${address }
 <br/></div>
 </c:forEach>
+<!-- DTO -->
+Class Mover{
+private String mover;
+private String mout;
+private String 
+}
 
+public String mouseSet(Mover mover){
+tag = "<style>.${mover}{overflow:auto;background-color:skyblue} .${mout}{background-color="#fff"}</style>"
+tag+= "<script type="text/javascript">${function}</script>"
+tag +="<div onmouseover='this.className=${mover}' onmouseout ='this.className=${mout}'
+onclick='${function}'>"
+
+return tag;
+}
+</div>
 
 </body>
 </html>

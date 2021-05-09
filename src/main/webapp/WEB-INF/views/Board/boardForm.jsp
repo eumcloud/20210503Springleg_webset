@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="home" value="/"  />
 <center>
 <table style="width: 650px; ">
 	<thead>
@@ -18,13 +19,16 @@
 		<td style="width: 120px; height:20px;" align="center"><hr/></td>
 		<td style="width: 80px; height:20px;" align="center"><hr/></td>
 	</tr>
+	<c:forEach var="BoardLst" value="${BoardLst }">
+	<c:set var="" value="" />
+	<c:set var="" value="" />
 	<tr>
 		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/></td>
 		<td style="width: 330px; height:40px;" align="center">자주 이용해 주세요</td>
 		<td style="width: 80px; height:40px;" align="center">관리자</td>
 		<td style="width: 120px; height:40px;" align="center">20xx.xx.xx</td>
 		<td style="width: 80px; height:40px;" align="center">1</td>
-	</tr>
+	</tr></c:forEach>
 	<tr>
 		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/></td>
 		<td style="width: 330px; height:40px;" align="center">게시판 확인</td>
@@ -42,7 +46,7 @@
 	</tr>
 	<tr><td colspan=5><hr/></td></tr>
 </table>
-이전 1 2 3 4 다음
+${before}${pagenumber } ${next}
 <table>
 <tr>
 <td>
