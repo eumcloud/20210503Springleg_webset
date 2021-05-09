@@ -1,5 +1,6 @@
 package com.jin.Board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ public class BoardController {
 	
 	@RequestMapping (value="/BoardProc")
 	public String BoardLst(Model model, Login login) {
-		List<Board> BoardLst = new List<Board>();
+		List<Board> BoardLst = new ArrayList<Board>();
 		BoardLst =  iServ.BoardLst(login);
 		
 		model.addAttribute("home", "/BoardForm");
 		return "index";
 	}
-	@RequestMapping (value="/BoardProc")
+	@RequestMapping (value="/writeProc")
 	public String InsertBoard (Model model, Board board) {
 		
 		iServ.InsertBoard(board);
