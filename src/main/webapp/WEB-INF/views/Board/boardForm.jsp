@@ -19,23 +19,16 @@
 		<td style="width: 120px; height:20px;" align="center"><hr/></td>
 		<td style="width: 80px; height:20px;" align="center"><hr/></td>
 	</tr>
-	<c:forEach var="BoardLst" value="${BoardLst }">
-	<c:set var="" value="" />
-	<c:set var="" value="" />
+	<c:forEach var="Lst" items="${BoardLst }">
+	
 	<tr>
-		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/></td>
-		<td style="width: 330px; height:40px;" align="center">자주 이용해 주세요</td>
-		<td style="width: 80px; height:40px;" align="center">관리자</td>
-		<td style="width: 120px; height:40px;" align="center">20xx.xx.xx</td>
+		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/><c:set var="no" value="${Lst.no }" /></td>
+		<td style="width: 330px; height:40px;" align="center"><c:set var="title" value="${Lst.title }" /></td>
+		<td style="width: 80px; height:40px;" align="center"><c:set var="id" value="${Lst.id }" /></td>
+		<td style="width: 120px; height:40px;" align="center"><c:set var="date" value="${Lst.date }" /></td>
 		<td style="width: 80px; height:40px;" align="center">1</td>
 	</tr></c:forEach>
-	<tr>
-		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/></td>
-		<td style="width: 330px; height:40px;" align="center">게시판 확인</td>
-		<td style="width: 80px; height:40px;" align="center">관리자</td>
-		<td style="width: 120px; height:40px;" align="center">20xx.xx.xx</td>
-		<td style="width: 80px; height:40px;" align="center">10</td>
-	</tr>
+
 	<tr><td colspan=5><hr/></td></tr>
 	<tr>
 		<td colspan=2><input type="checkbox"/>전체선택</td>
