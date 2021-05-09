@@ -23,4 +23,12 @@ Update Board Set title = #{title} where id=#{id}
 Update Board Set contents = #{contents} where id=#{id}  
 </update>
 
+<select id="SelectBoardId" parameterType="com.jin.Board.Board" resultType="String">
+select * from board where id=#{id}
+</select>
+<delete id="DeleteWrite" parameterType="com.jin.Board.Board">
+Delete from board where no=#{no}
+
+</delete>
+
 </mapper>
