@@ -18,20 +18,26 @@ public class BoardController {
 	private IBoardService iServ;
 	
 	
-	@RequestMapping (value="/BoardProc")
-	public String BoardLst(Model model, Login login) {
+	@RequestMapping (value="BoardProc")
+	public String BoardLst(Model model, Login login, Board board) {
 		List<Board> BoardLst = new ArrayList<Board>();
-		BoardLst =  iServ.BoardLst(login);
+		BoardLst =  iServ.BoardLst(board, login);
 		
+		model.addAttribute("boardLst", BoardLst);
 		model.addAttribute("home", "/BoardForm");
 		return "index";
 	}
-	@RequestMapping (value="/writeProc")
+	@RequestMapping (value="writeProc")
 	public String InsertBoard (Model model, Board board) {
 		
 		iServ.InsertBoard(board);
+		return "index";
+	}
+	
+	@RequestMapping(value="writeProc")
+	public String updateWrite(Model model, Board board) {
 		
-		model.addAttribute("home", "BoardForm");
+		iServ.UpdateWrite(board);
 		return "index";
 	}
 }

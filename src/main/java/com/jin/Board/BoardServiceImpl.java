@@ -15,16 +15,19 @@ public class BoardServiceImpl implements IBoardService{
 	private List<Board> BoardLst;
 
 	@Override
-	public List<Board> BoardLst(Login login) {
+	public List<Board> BoardLst(Board board, Login login) {
 		
 		Dao.SelectBoard(login);
-		
 		return BoardLst;
 	}
 	
 	@Override
 	public void InsertBoard(Board board){
 		Dao.InsertBoard(board);
+	}
+	@Override
+	public void UpdateWrite(Board board) {
+		Dao.UpdateWrite(board);
 	}
 
 }

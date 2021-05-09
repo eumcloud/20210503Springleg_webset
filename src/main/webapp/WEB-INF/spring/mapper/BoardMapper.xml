@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.Board.IBoardDao">
 <select id="SelectBoard" parameterType="com.jin.Board.Board">
-
 select * from
 (select no, id, date, title, contents
 	from Board 
@@ -19,5 +18,9 @@ Insert into Board (no, id, date, title, contents)
 	values (#{no}, #{id}, #{date}, #{title}, #{contents})
 </insert>
 
+<update id="UpdateWrite" parameterType="com.jin.Board.Board">
+Update Board Set title = #{title} where id=#{id}
+Update Board Set contents = #{contents} where id=#{id}  
+</update>
 
 </mapper>
