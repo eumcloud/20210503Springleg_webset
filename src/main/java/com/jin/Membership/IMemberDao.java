@@ -16,4 +16,6 @@ public interface IMemberDao {
 	public void addrSelect(String addr);
 
 	public List<Zipcode> SearchZipcode(String addr);
+
+	public void InsertPostcode(Postcode postcode);
 }

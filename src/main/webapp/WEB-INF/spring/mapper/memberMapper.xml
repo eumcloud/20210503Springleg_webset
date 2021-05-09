@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.Membership.IMemberDao">
 
+<insert id="Insertostcode" parameterType="com.jin.Membership.Postcode">
+<selectKey keyProperty="no" resultType="int" order="BEFORE">
+select NVL(max(no), 0)+1 from FROM postcode
+</selectKey>
+INSERT INTO PostCode  (zipcode, add1, add2, id)
+VALUES ('${no}"${zipcode}', '${addr1}', '${addr2}', '${id}')
+</insert>
+
 <select id="isExistID" parameterType="String" resultType="int">
 SELECT COUNT(*) FROM login WHERE ID=#{id}
 </select>

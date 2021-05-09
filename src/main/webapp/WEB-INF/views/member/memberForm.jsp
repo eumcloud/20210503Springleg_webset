@@ -11,7 +11,7 @@ function SearchPostCode(cmd){
 	var option = "top=500, left=500, width=400, height=400";
 	window.open = (cmd, "_blank", option);
 }
-
+c
 function popup(url, name){
 	var option = "top=500, left=500, width=400, height=400";
 	window.name = name;

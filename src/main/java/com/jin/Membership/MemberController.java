@@ -2,6 +2,9 @@ package com.jin.Membership;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +21,14 @@ import org.springframework.web.bind.support.SessionStatus;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	
+	
 	@Autowired
 	private IMemberService iServ;
 
-	
-	
 	//컨트롤러에서는 데이터 가공하지 말것!
 	// >>모든 가공 및 필터링 작업은 서비스에서 해야 수정이 편하다
 	// 단, 현장에서 맘대로 하면 맞춰가는 수밖에 없다..
-	
-	
 	
 	@RequestMapping(value = "isExistID")
 	public String isExistID(Model model, Login login) {
@@ -37,30 +38,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="sendAuth")
-	public String sendAuth(Model model, Member member){
-		String authNum= iServ.sendAuth(member);
+	public String sendAuth(Model model, Member member, HttpSession session){
 		
+		/* String authNum= */iServ.sendAuth(member, session);
+//		session.setAttribute("authSess", authNum);
+//		model.addAttribute("authNum", authNum);
 		
-		
-		model.addAttribute("sessionAuthNum", authNum);
-		model.addAttribute("msg", authNum);
+//			logger.warn(authNum);
+		model.addAttribute("msg", "이메일을 확인하세요");
 		return "forward:/index?formpath=member";
 	}
 
 	@RequestMapping(value="authConfirm")
 	public String authConfirm(Model model, Member member,
 			@RequestParam String authNum
-			/* ,@ModelAttribute("sessionAuthNum") ,String sAuthNum*/
-			 ,SessionStatus session			){
-			//대체가능한 코드
-			String sAuthNum = (String)model.getAttribute("sessionAthNum");
+			 ,HttpSession session){
+		
 			
-		logger.warn(sAuthNum);
-			
-		if(sAuthNum!=null)
-			model.addAttribute("msg", iServ.authConfirm(authNum, sAuthNum , session));
-		else
-			model.addAttribute("msg", "인증번호 전송을 먼저 눌러야 합니다.");
+//		if(sAuthNum!=null)//인증번호 입력한 경우
+//			model.addAttribute("msg", iServ.authConfirm(authNum, session));
+//		else
+//			model.addAttribute("msg", "인증번호 전송을 먼저 눌러야 합니다.");
 		
 		return "forward:/index?formpath=member";
 
@@ -68,11 +66,19 @@ public class MemberController {
 	
 	//아이디만 입력후 회원가입하면 에러난다, 해결하기
 	@RequestMapping(value="memberProc")
-	public String memberProc(Model model, Member member){
+	public String memberProc(Model model, Member member, Postcode postcode, HttpSession session){
+		Boolean authStatus =(Boolean) session.getAttribute("authStatus");
+//		logger.warn(authSatus+"");
 		
-		iServ.MemberProc(member);
+		if(authStatus ) iServ.MemberProc(member, postcode);
+		else model.addAttribute("msg", "인증을 진행해야합니다");
+		
+		
+//		iServ.MemberProc(member, postcode, HttpSession session);
 		return "forward:/index?formpath=member";
 	}
+	
+	
 	
 	@RequestMapping(value="searchZipcode")
 	public String searchZipcode(Model model,

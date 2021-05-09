@@ -19,6 +19,8 @@
 	p:password="${jdbc.password}"
 	/>
 	
+	
+	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
 	id="sqlSessionFactoryBean"
 	p:dataSource-ref="dataSource"
@@ -30,4 +32,8 @@
 	p:mapperInterface="com.jin.Membership.IMemberDao"
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"
 	/>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
 </beans>
