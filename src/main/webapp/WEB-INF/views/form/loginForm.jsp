@@ -1,7 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-
+<style>
+h3{
+color:skyblue;
+}
+</style>
 <center>
 <table>
+<h3>${msg }</h3>
+<form action="${home}login/loginProc" method="post">
 	<tr>
 		<td>아이디</td>
 		<td><input type=text name='id' placeholder='ID 입력'/></td>
@@ -17,5 +23,6 @@
 		</td>
 	</tr>
 </table>
-</h3>
+
+</form>
 </center>
