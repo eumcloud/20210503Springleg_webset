@@ -1,5 +1,7 @@
 package com.jin.Login;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,8 @@ public class LoginController {
 	*/
 	final String LOGINAPROVE = "로그인에 성공하였습니다";
 	final String LOGINFAILED = "아이디와 비밀번호를 확인하세요";
-	@Autowired
-	private ILoginService iServ;
+	@Autowired private ILoginService iServ;
+	@Autowired private HttpSession session;
 	
 	@RequestMapping(value="login")
 	public String LoginForm(Model model, Login login) {
@@ -44,5 +46,14 @@ public class LoginController {
 		return "forward:/index?formpath=home";
 	}
 	
+	@RequestMapping(value="logoutProc")
+	public String logoutProc(Login login) {
+		session.invalidate();
+		/*
+		 * String id = (String) session.getAttribute(login.getId());
+		 * session.removeAttribute(id);
+		 */
+		return "forward:/index?formpath=home";
+	}
 
 }

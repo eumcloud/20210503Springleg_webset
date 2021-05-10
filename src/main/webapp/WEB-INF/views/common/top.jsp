@@ -42,12 +42,12 @@ a:active{color:#ff00cc; text-decoration:underline; }
 		
 		<c:choose>
 		<c:when test= "${id!=null }"><td><a href="${home }index.jsp?formpath=login">${id }님</a></td></c:when>
-		<td><a href="${home }index.jsp?formpath=boardForm">게시판</a></td>
-		<td><a href="${home }index.jsp?formpath=logoutProc">로그아웃</a></td>
+		<td><a href="${tophome }index.jsp?formpath=boardForm">게시판</a></td>
+		<td><a href="${tophome }index.jsp?formpath=logoutProc">로그아웃</a></td>
 		
 		<c:otherwise>
-		<td><a href="${home }index.jsp?formpath=login">로그인</a></td>
-		<td><a href="${home }index.jsp?formpath=member">회원가입</a></td>
+		<td><a href="${tophome }index.jsp?formpath=login">로그인</a></td>
+		<td><a href="${tophome }index.jsp?formpath=member">회원가입</a></td>
 		</c:otherwise></c:choose>
 	
 		
