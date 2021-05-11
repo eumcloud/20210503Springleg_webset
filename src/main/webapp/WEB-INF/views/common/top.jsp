@@ -37,7 +37,7 @@ a:active{color:#ff00cc; text-decoration:underline; }
 		<td><a href="${home }index.jsp?formpath=boardForm">게시판</a></td>
 		<td><a href="${home }index.jsp?formpath=logoutProc">로그아웃</a></td> 
 		<% } %>
-		
+				
 		<c:set var="id" scope="session" value="${id }" />
 		
 		<c:choose>

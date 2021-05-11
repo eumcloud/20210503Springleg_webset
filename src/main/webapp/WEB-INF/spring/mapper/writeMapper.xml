@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jin.Board">
+<insert id="Insert" parameterType="com.jin.Board.Board">
+Insert into Board values (#{no}, #{date},#{id}, #{title}, #{contents})
+</insert>
+
+<select id="Select" parameterType="com.jin.Board.Board" resultType="com.jin.Board.Board">
+Select * from
+( Select no, date, id, title, contents 
+from Board
+Order by no desc 
+)
+</select>
+
+<update id="Update" parameterType="com.jin.Board.Board" >
+Update Board Set title = #{title}
+Update Board Set contents = #{contents}
+</update>
+
+<delete id="Delete" parameterType="com.jin.Board.Board">
+
+</delete>
+
+</mapper>

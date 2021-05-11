@@ -36,7 +36,10 @@
 	p:mapperInterface="com.jin.Membership.ILoginDao"
 	p:sqlSessionFactory-ref="sqlSessionFactoryBean"
 	/>
-	
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartFile" 
+	id="multipartResolver"
+	p:maxInMemorySize="1000000000"
+	p:maxUploadSize="1000000000"/>
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"></constructor-arg>

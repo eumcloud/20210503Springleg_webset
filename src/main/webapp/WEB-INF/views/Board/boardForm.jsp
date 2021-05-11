@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="home" value="/"  />
-<center>
+<center><form action="${home }/Board/write">
 <table style="width: 650px; ">
 	<thead>
 	<tr>
@@ -34,11 +34,20 @@
 		<td colspan=2><input type="checkbox"/>전체선택</td>
 		<td colspan=3 align="right">
 			<input type="button" value='삭제' style="width: 100px; "/>
-			<input type="button" value='글쓰기' style="width: 100px; "/>
+			
+			<button style="width:100px;">글쓰기 </button>
 		</td>
 	</tr>
 	<tr><td colspan=5><hr/></td></tr>
 </table>
+<script type="text/javascript">
+function getWrite(name){
+	var name = document.getElementByName(write);
+	name.action='${home}/Board/writeForm';
+	name.submit;
+}
+</script>
+
 ${before}${pagenumber } ${next}
 <table>
 <tr>
@@ -52,5 +61,5 @@ ${before}${pagenumber } ${next}
 	<input type=button name='searchBtn' value='검색' style="width: 80px; "/>
 </td>
 </tr>
-</table>
+</table></form>
 </center>
