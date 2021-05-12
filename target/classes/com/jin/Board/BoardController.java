@@ -1,6 +1,7 @@
 package com.jin.Board;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -54,10 +55,10 @@ public class BoardController {
 	public String detailRead(Model model, @RequestParam String writeNo) {
 		logger.warn(writeNo);
 		
-		List<Board> read = iServ.SelectContetns(writeNo);
-		List<AttachFile> file = iServ.DetailReadAttach(writeNo);
-		model.addAttribute("read", read);
-		model.addAttribute("file", file);
+		Map<String, Object> boardMap = iServ.DetailRead(writeNo);
+		
+		model.addAttribute("board", boardMap.get("board"));
+		model.addAttribute("attachLst", boardMap.get("attachLst"));
 		
 		return "forward:/index?formapth=viewForm";
 	}

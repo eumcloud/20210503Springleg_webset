@@ -5,7 +5,9 @@
 <script type="text/javascript">
 $(document).ready(()=>{
 	function pagefrm(id){
-		let frm = ${'#'+id}
+		let frm = ${'#'+id};
+		frm.action="${home}/Board/"+frm;
+		frm.submit;
 	}
 })
 
@@ -23,8 +25,10 @@ $(document).ready(()=>{
 	</tr>
 	<tr>
 		<td  style="width: 300px; height:40px;" valign="top">${read.id }</td>
-		<c:forEach var="file" items="${file }">
-		<td style="width: 350px; height:40px;" align="right" valign="top">${file }</td></c:forEach>
+		<c:forEach var="attachMap" items="${attachLst }">
+		<td style="width: 350px; height:40px;" align="right" valign="top">
+		<a href="${home }resources/upload/${attachMap.SYSTEMFILE }">${attachMap.ORIGINFILE }</a>
+		</td></c:forEach>
 	</tr>
 	<tr>
 		<td colspan=2 style="width: 650px; height: 300px" valign="top">

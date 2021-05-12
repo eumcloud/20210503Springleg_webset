@@ -96,7 +96,7 @@ public class BoardServiceImpl implements IBoardService {
 	
 	
 	@Override
-	public Board DetailRead(String writeNo) {
+	public Map<String, Object> DetailRead(String writeNo) {
 //		List<Map<String,Object>> attachLst = iBoardDao.DeatilReadAttach(writeNo);
 ////		List<Board> read = iBoardDao.DetailRead(writeNo);
 //		logger.warn(attachLst.size()+"");
@@ -110,7 +110,7 @@ public class BoardServiceImpl implements IBoardService {
 		boardMap.put("attachLst", iBoardDao.DeatilReadAttach(writeNo));
 		
 	
-		return iBoardDao.DetailRead(writeNo);
+		return boardMap;
 	}
 
 	

@@ -9,5 +9,5 @@ public interface IBoardService {
 	public void Write(Board board, HttpServletRequest request);
 
 	public List<Board> SelectBoard();
-	public Board DetailRead(String writeNo);
+	public Map<String, Object> DetailRead(String writeNo);
 }
