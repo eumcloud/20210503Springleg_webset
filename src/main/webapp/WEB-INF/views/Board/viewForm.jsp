@@ -1,23 +1,32 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:url var="home" value="/"/>
+<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(()=>{
+	
+})
 
+</script>
+
+</head>
 <center>
 <table style="width: 650px; ">
 	<tr>
-		<td style="width: 300px; height:40px;" valign="middle"><h2>게시판 확인</h2></td>
-		<td style="width: 350px; height:40px;" align="right" valign="bottom">20xx.xx.xx</td>
+		<td style="width: 300px; height:40px;" valign="middle"><h2>${title }</h2></td>
+		<td style="width: 350px; height:40px;" align="right" valign="bottom">${writedate }</td>
 	</tr>
 	<tr>
 		<td colspan=2><hr/></td>
 	</tr>
 	<tr>
-		<td  style="width: 300px; height:40px;" valign="top">관리자</td>
+		<td  style="width: 300px; height:40px;" valign="top">${id }</td>
 		<td style="width: 350px; height:40px;" align="right" valign="top">첨부파일</td>
 	</tr>
 	<tr>
 		<td colspan=2 style="width: 650px; height: 300px" valign="top">
 		<pre>
-게시판 확인 페이지
-테스트를 위해 만든 페이지 입니다.
+${contents }
 		</pre>
 		</td>
 	</tr>
@@ -26,11 +35,11 @@
 	</tr>
 	<tr>
 		<td colspan=2 align="right">
-			<input type=button style="width: 60px; " value='글쓰기'/> 
-			<input type=button style="width: 60px; " value='답글'/>
-			<input type=button style="width: 60px; " value='수정'/>
-			<input type=button style="width: 60px; " value='삭제'/>
-			<input type=button style="width: 60px; " value='목록'/>
+			<button style="width: 60px; " onclick="${home}/Board/write">글쓰기</button>
+			<button style="width: 60px; " onclick="${home}/Board/reply">답글</button>
+			<button style="width: 60px; " onclick="${home}/Board/modify">수정</button>
+			<button style="width: 60px; " onclick="${home}/Board/delete">삭제</button>
+			<button style="width: 60px; " onclick="${home}/Board/listview">목록</button>
 		</td>
 	</tr>
 </table>

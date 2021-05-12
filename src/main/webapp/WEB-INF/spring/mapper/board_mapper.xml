@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jin.Board.IBoardDao">
+<insert id="Write" parameterType="com.jin.Board.Board">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		SELECT nvl(max(no), 0)+1 FROM board
+	</selectKey>
+	INSERT INTO board(no, id, title, contents, writedate)
+	VALUES(#{no},#{id},#{title},#{contents},#{writedate})
+</insert>
+<insert id="AttachFile" parameterType="Map">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		SELECT nvl(max(no), 0)+1 FROM attachfile
+	</selectKey>
+	INSERT INTO attachfile(no,systemFile,originFile,fno)
+	VALUES(#{no},#{systemFile},#{originFile},#{fno})
+</insert>
+
+<select id="SelectBoard" resultType="com.jin.Board.Board">
+SELECT no, id, title, contents, writedate, hit
+    FROM(
+      SELECT LEVEL, no, id, LPAD(' ', 4*(LEVEL-1))||title as title,    contents, writeDate, nvl(readNo, 0) as hit, pno, depth,    ROWNUM AS RNUM
+      FROM(
+        SELECT b.no, id, title, contents,   writeDate,    h.readNo, nvl(rpl.pno, 0) as pno, 
+   nvl(rpl.depth, 0) as depth
+        FROM board b
+        LEFT JOIN Hits h
+        ON b.no = h.no
+        LEFT JOIN reply rpl
+        ON b.no = rpl.no
+      )
+      START WITH pno=0
+      CONNECT BY PRIOR no=pno
+      ORDER SIBLINGS BY no desc
+    )
+    </select>
+    
+    <select id="SelectContetns" parameterType="int" resultType="com.jin.Board.Board">
+    select no, id, title, contents, writedate from board where no=#{no}
+    </select>
+    
+    <update id="UpdateContetns" parameterType="int" >
+    update board set title where no=#{no}
+    update board set contents where no=#{contents}
+    </update>
+    
+    <delete id="DeleteContetns" parameterType="int" >
+    delete board where no =#{no}
+    </delete>
+</mapper>
