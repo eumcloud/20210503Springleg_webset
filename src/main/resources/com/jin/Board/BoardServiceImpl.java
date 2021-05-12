@@ -97,13 +97,19 @@ public class BoardServiceImpl implements IBoardService {
 	
 	@Override
 	public Board DetailRead(String writeNo) {
-		List<Map<String,Object>> attachLst = iBoardDao.DeatilReadAttach(writeNo);
-//		List<Board> read = iBoardDao.DetailRead(writeNo);
-		logger.warn(attachLst.size()+"");
-		for (Map<String, Object> attachMap : attachLst) {
-			for(String key : attachMap.keySet());
-				logger.warn(key +" : " + attachMap.get(key));
-		}
+//		List<Map<String,Object>> attachLst = iBoardDao.DeatilReadAttach(writeNo);
+////		List<Board> read = iBoardDao.DetailRead(writeNo);
+//		logger.warn(attachLst.size()+"");
+//		for (Map<String, Object> attachMap : attachLst) {
+//			for(String key : attachMap.keySet());
+//				logger.warn(key +" : " + attachMap.get(key));	}
+		
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap.put("board", iBoardDao.DetailRead(writeNo));
+		boardMap.put("attachLst", iBoardDao.DeatilReadAttach(writeNo));
+		
+	
 		return iBoardDao.DetailRead(writeNo);
 	}
 
