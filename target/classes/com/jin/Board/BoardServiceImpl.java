@@ -93,11 +93,22 @@ public class BoardServiceImpl implements IBoardService {
 		
 		return boardLst;
 	}
+	
+	
 	@Override
-	public List<Board> SelectContetns(int no) {
-		List<Board> contents = iBoardDao.SelectContetns(no);
-		return contents;
+	public Board DetailRead(String writeNo) {
+		List<Map<String,Object>> attachLst = iBoardDao.DeatilReadAttach(writeNo);
+//		List<Board> read = iBoardDao.DetailRead(writeNo);
+		logger.warn(attachLst.size()+"");
+		for (Map<String, Object> attachMap : attachLst) {
+			for(String key : attachMap.keySet());
+				logger.warn(key +" : " + attachMap.get(key));
+		}
+		return iBoardDao.DetailRead(writeNo);
 	}
+
+	
+	
 }
 
 

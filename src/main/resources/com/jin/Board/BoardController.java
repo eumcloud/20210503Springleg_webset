@@ -11,8 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jin.Membership.Login;
+
+   
+      
+   
 
 @Controller
 @RequestMapping("board")
@@ -20,7 +25,7 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired private IBoardService iServ;
-		
+	
 	@RequestMapping(value = "write")
 	public String write(Model model, HttpSession session) {
 		model.addAttribute("usrId", session.getAttribute("id"));
@@ -43,23 +48,21 @@ public class BoardController {
 		return "forward:/index?formpath=boardForm";
 	}
 	
-	@RequestMapping(value = "viewForm")
-	public String viewForm(Model model, Board board, HttpServletRequest request) {
+	
+
+	@RequestMapping(value="detailRead")
+	public String detailRead(Model model, @RequestParam String writeNo) {
+		logger.warn(writeNo);
 		
-		//1.고객이 클릭한 글의 no값을 받아온다.
-		int no = board.getNo();
+		List<Board> read = iServ.SelectContetns(writeNo);
+		List<AttachFile> file = iServ.DetailReadAttach(writeNo);
+		model.addAttribute("read", read);
+		model.addAttribute("file", file);
 		
-		
-		//2.해당 게시글 정보 불러온다.
-		List<Board> contents = iServ.SelectContetns(no);
-		//3.model로 보내준다.
-		
-		model.addAttribute("content", contents);
-		
-		return "forward:/index?formpath=viewForm";
+		return "forward:/index?formapth=viewForm";
 	}
 	
-	@RequestMapping(value="/board/")
+	
 }
 
 

@@ -6,15 +6,17 @@
 $(document).ready(()=>{ /*  콜백 document*/
 	
 	$("div.title").css("cursor", "pointer").click(()=>{
-		/*  클릭시 no값 가져오기*/
-		alert($(this)).attr('id'));/* div.title로 값을 찾을 수 있지만 전체 글이 div.title이라 뭘 클릭해도 맨위에것이 나온다 따라서 this로 불러오기 */
-		$(this).attr("param");
+		let no = $(this).attr('id'); /* 클릭할경우 no인스턴스에서 id값 저장 */
+		$('#writeNo').val(no);  /* id="writeNo" value값에 no입력  */
+		$("#frm").attr("action", "${home}board/detailRead");
+		$("#frm").submit();
 	}
 });
 
 </script></head>
 <center>
-<form action="${home }board/write" method="post">
+<form id="frm" action="${home }board/write" method="post">
+<input type="hidden" name="writeNo" id="writeNo"/>
 <table style="width: 650px; ">
 	<thead>
 	<tr>

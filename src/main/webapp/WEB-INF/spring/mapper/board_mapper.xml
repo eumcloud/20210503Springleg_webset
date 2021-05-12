@@ -15,6 +15,14 @@
 	INSERT INTO attachfile(no,systemFile,originFile,fno)
 	VALUES(#{no},#{systemFile},#{originFile},#{fno})
 </insert>
+<select id="DetailRead" parameterType="String" resultType="com.jin.Board.Board">
+Select * from Board where no=#{writeNo}
+</select> 
+<select id="DetailReadAttachFile" parameterType="String" resultType="HashMap">
+
+	Select fno, no, systemfilename, originfilename from attachfile where fno=#{writeNo}
+
+</select>
 
 <select id="SelectBoard" resultType="com.jin.Board.Board">
 SELECT no, id, title, contents, writedate, hit
