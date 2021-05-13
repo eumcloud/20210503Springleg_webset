@@ -12,5 +12,7 @@ public interface IBoardDao {
 	public void AttachFile(Map<String, String> fileMap);
 	public void UpdateContetns(String writeNo);
 	public void DeleteContents(String writeNo);
+
+	public void REPL(Board board);
 	
 }

@@ -112,7 +112,19 @@ public class BoardServiceImpl implements IBoardService {
 	
 		return boardMap;
 	}
-
+	@Override
+	public void REPL(Board board, HttpServletRequest request) {
+		Date writedate = new Date(System.currentTimeMillis());
+		board.setWritedate(writedate);
+		iBoardDao.REPL(board);
+//		logger.warn(board.getNo()+"");
+		List<Map<String, String>> fileLst = Upload(request);
+		
+		for(Map<String, String> fileMap : fileLst) {
+			fileMap.put("fno", board.getNo().toString());
+			iBoardDao.AttachFile(fileMap);
+		}
+	}
 	
 	
 }

@@ -10,4 +10,6 @@ public interface IBoardService {
 
 	public List<Board> SelectBoard();
 	public Map<String, Object> DetailRead(String writeNo);
+
+	public void REPL(Board board, HttpServletRequest request);
 }

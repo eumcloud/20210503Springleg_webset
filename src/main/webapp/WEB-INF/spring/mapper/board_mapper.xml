@@ -18,7 +18,7 @@
 <select id="DetailRead" parameterType="String" resultType="com.jin.Board.Board">
 Select * from Board where no=#{writeNo}
 </select> 
-<select id="DetailReadAttachFile" parameterType="String" resultType="HashMap">
+<select id="DetailReadAttach" parameterType="String" resultType="HashMap">
 
 	Select fno, no, systemfilename, originfilename from attachfile where fno=#{writeNo}
 
@@ -43,9 +43,9 @@ SELECT no, id, title, contents, writedate, hit
     )
     </select>
     
-    <select id="SelectContetns" parameterType="int" resultType="com.jin.Board.Board">
+<!--     <select id="SelectContetns" parameterType="int" resultType="com.jin.Board.Board">
     select no, id, title, contents, writedate from board where no=#{no}
-    </select>
+    </select> -->
     
     <update id="UpdateContetns" parameterType="int" >
     update board set title where no=#{no}
@@ -55,4 +55,13 @@ SELECT no, id, title, contents, writedate, hit
     <delete id="DeleteContetns" parameterType="int" >
     delete board where no =#{no}
     </delete>
+    
+    
+    <insert id="REPL" parameterType="com.jin.Board.Board">
+    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		SELECT nvl(max(no), 0)+1 FROM board
+		</selectKey>
+    INSERT INTO board where no = #{no}
+    
+    </insert>
 </mapper>

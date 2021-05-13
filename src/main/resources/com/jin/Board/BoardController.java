@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jin.Membership.Login;
 
-   
-      
-   
-
 @Controller
 @RequestMapping("board")
 public class BoardController {
@@ -61,6 +57,18 @@ public class BoardController {
 		model.addAttribute("attachLst", boardMap.get("attachLst"));
 		
 		return "forward:/index?formapth=viewForm";
+	}
+	@RequestMapping(value="reply")
+	public String reply(Model model, Login login) {
+		
+		model.addAttribute("usrId", login.getId());
+		return "forward:/index?formpath=writeForm";
+	}
+	@RequestMapping(value="replyProc")
+	public String replyProc(Board board, HttpServletRequest request) {
+		
+		iServ.REPL(board, request);		
+		return "forward:/index?formpath=boardProc";
 	}
 	
 	
