@@ -30,7 +30,7 @@ a:active{color:#ff00cc; text-decoration:underline; }
 		<td><a href="${topHome}index?formpath=member">회원가입</a></td>
 		<%}else{ %>
 		<td><a href="${topHome}login/logout">로그아웃</a></td>
-		<td><a href="${topHome }index?formpath=board">게시판</a></td>
+		<td><a href="${topHome }board/boardProc">게시판</a></td>
 		<%} %>
 	</tr>
 	<tr><td align="center" colspan=5><hr/></td></tr>

@@ -1,19 +1,36 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="home" value="/"/>
-<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(()=>{ /*  콜백 document*/
-	
-	$("div.title").css("cursor", "pointer").click(()=>{
-		let no = $(this).attr('id'); /* 클릭할경우 no인스턴스에서 id값 저장 */
-		$('#writeNo').val(no);  /* id="writeNo" value값에 no입력  */
-		$("#frm").attr("action", "${home}board/detailRead");
-		$("#frm").submit();
-	}
-});
 
-</script></head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("div.title").css("cursor", "pointer").click(function(){
+		let no = $(this).attr("id");
+		$("#writeNo").val(no);
+		$("#frm").attr("action", "${home }board/detailRead");
+		$("#frm").submit();
+	})
+	$("#allSelect").click(function() {
+		console.log(this.checked);
+		$(".chkbox").prop('checked', this.checked);
+		console.log($(".chkbox").length);
+	})
+	$(".chkbox").click(function() {
+		console.log($(".chkbox").length);
+		console.log($(".chkbox:checked").length);
+		if($(".chkbox").length == $(".chkbox:checked").length)
+			$("#allSelect").prop('checked', true);
+		else
+			$("#allSelect").prop('checked', false);
+		
+		let chked = $(".chkbox").length == $(".chkbox:checked").length;
+		$("#allSelect").prop('checked', chked);
+	})
+});
+</script>
+
 <center>
 <form id="frm" action="${home }board/write" method="post">
 <input type="hidden" name="writeNo" id="writeNo"/>
@@ -36,24 +53,30 @@ $(document).ready(()=>{ /*  콜백 document*/
 	</tr>
 	<c:forEach var="board" items="${boardLst }">
 	<tr>
-		<td style="width: 40px; height:40px;" align="center"><input type="checkbox"/></td>
-		<td style="width: 330px; height:40px;" id="${board.no }" param="test" class="title" align="center"><pre><a href="/Board/viewForm/${no }">${board.title }</a></pre></td>
-		<td style="width: 80px; height:40px;" align="center">${ board.id}</td>
+		<td style="width: 40px; height:40px;" align="center">
+		<input class="chkbox" name="chkbox" value="${board.no }" type="checkbox"/></td>
+		<td style="width: 330px; height:40px;" align="left">
+			<pre><div class="title" id="${board.no }">${board.title }</div></pre>
+		</td>
+		<td style="width: 80px; height:40px;" align="center">${board.id }</td>
 		<td style="width: 120px; height:40px;" align="center">${board.writedate }</td>
 		<td style="width: 80px; height:40px;" align="center">${board.hit }</td>
-	</tr></c:forEach>
+	</tr>
+	</c:forEach>
 	<tr><td colspan=5><hr/></td></tr>
 	<tr>
-		<td colspan=2><input type="checkbox"/>전체선택</td>
+		<td colspan=2><input id="allSelect" type="checkbox"/>전체선택</td>
 		<td colspan=3 align="right">
-			<input type="button" value='삭제' style="width: 100px; "/>
+			<!-- <input type="button" value='삭제' style="width: 100px; "/> -->
+			<button formaction="${home }board/deletes" style="width: 100px; ">삭제</button>
 			<button style="width: 100px; ">글쓰기</button>
 		</td>
 	</tr>
 	<tr><td colspan=5><hr/></td></tr>
 </table>
 </form>
-이전 1 2 3 4 다음
+<!-- 이전 1 2 3 4 다음 -->
+${navi }
 <table>
 <tr>
 <td>

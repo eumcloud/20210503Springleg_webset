@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:url var="home" value="/"/>
 
 <center>
+<h3><font color="red">${msg }</font></h3>
+<form action="${home }login/loginProc" method="post">
 <table>
 	<tr>
 		<td>아이디</td>
@@ -17,5 +21,5 @@
 		</td>
 	</tr>
 </table>
-</h3>
+</form>
 </center>

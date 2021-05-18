@@ -14,10 +14,9 @@ public class Board {
 	private String contents;
 	// 작성일
 	private Date writedate;
-	
-	
+	//클릭수
 	private int hit;
-
+	
 	public int getHit() {
 		return hit;
 	}

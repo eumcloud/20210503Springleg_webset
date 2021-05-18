@@ -1,33 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="home2" value="/"/>
 <c:url var="home" value="/"/>
 
-<center>
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js">
-function SearchPostCode(cmd){
-	window.name = "우편번호 검색";
-	var option = "top=500, left=500, width=400, height=400";
-	window.open = (cmd, "_blank", option);
-}
-
-function popup(url, name){
-	var option = "top=500, left=500, width=400, height=400";
-	window.name = name;
-	window.open = (url, "_blank", option);
-	
+<script type="text/javascript">
+function SearchPostcode(cmd){
+	window.name="우편번호 검색";
+	window.open(cmd, "_blank", "top=500, left=500, width=400, height=400");
 }
 </script>
-<form action="memberProc" method="post">
-
-<h3>${authNumOk }</h3>
+<center>
+<h3><font color="red">${msg }</font></h3>
+<form action="${home }membership/memberProc" method="post">
 <table>
 	<tr><td colspan="4" align="center"><hr/>필수 사항<hr/></td></tr>
 	<tr>
 		<td align='right' height=40>아이디</td>
 		<td>
-			<input type=text name='id' placeholder='id 입력'  value="${member.id }" /> 
+			<input type=text name='id' placeholder='id 입력' value="${member.id }"/> 
 		</td>
 		<td colspan="2"><button formaction="${home }membership/isExistID">중복 확인</button></td>
 	</tr>
@@ -46,12 +35,12 @@ function popup(url, name){
 		<td>
 			<input type=text name='email' placeholder='E-Mail 입력' value="${member.email }"/> 
 		</td>
-		<td colspan="2"><button formaction="${home}membership/sendAuth">인증번호 전송</button></td>
+		<td colspan="2"><button formaction="${home }membership/sendAuth">인증번호 전송</button></td>
 	</tr>
 	<tr>
 		<td align='right'>인증번호</td>
 		<td>
-			<input type=text name='CauthNum' placeholder='인증번호 입력'/> 
+			<input type=text name='authNum' placeholder='인증번호 입력'/> 
 		</td>
 		<td colspan="2"><button formaction="${home }membership/authConfirm">인증번호 확인</button></td>
 	</tr>
@@ -59,14 +48,14 @@ function popup(url, name){
 	<tr>
 		<td align='right'>우편번호</td>
 		<td>
-			<input type=text name='zipcode' id="zipcode" readonly="readonly"/> 
+			<input type=text name='zipcode' id='zipcode' readonly="readonly"/> 
 		</td>
-		<td colspan="2"><input type="button" value="우편번호 검색" onclick="SerachPostCode(${home}member/SearchPostCode);"></td>
+		<td colspan="2"><input type="button" onclick="SearchPostcode('${home}membership/searchPostcode');" value="우편번호 검색"></td>
 	</tr>
 	<tr>
 		<td align='right'>주소</td>
 		<td colspan="3">
-			<input type=text name='addr1' id="addr1" readonly="readonly" style="width: 475px; "/> 
+			<input type=text name='addr1' id='addr1' readonly="readonly" style="width: 475px; "/> 
 		</td>
 	</tr>
 	<tr>
@@ -79,14 +68,14 @@ function popup(url, name){
 		<td align='right' width=120>성 별</td>
 		<td colspan="3">
 			<input type=radio name='gender' value='n' checked="checked"/>선택안함
-			<input type=radio name='gender' value='m' />남자 
+			<input type=radio name='gender' value='m' />남자
 			<input type=radio name='gender' value='w' />여자 
 		</td>
 	</tr>
 	
 	<tr>
 		<td align='center' height=40 colspan=4>
-			<input type=submit value='로그인' style="width: 120px; "/>
+			<input type=submit value='회원가입' style="width: 120px; "/>
 			<input type=reset value='취소' style="width: 120px; "/>	 
 		</td>
 	</tr>

@@ -1,67 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.Board.IBoardDao">
-<insert id="Write" parameterType="com.jin.Board.Board">
-	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-		SELECT nvl(max(no), 0)+1 FROM board
-	</selectKey>
-	INSERT INTO board(no, id, title, contents, writedate)
-	VALUES(#{no},#{id},#{title},#{contents},#{writedate})
-</insert>
-<insert id="AttachFile" parameterType="Map">
-	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-		SELECT nvl(max(no), 0)+1 FROM attachfile
-	</selectKey>
-	INSERT INTO attachfile(no,systemFile,originFile,fno)
-	VALUES(#{no},#{systemFile},#{originFile},#{fno})
-</insert>
-<select id="DetailRead" parameterType="String" resultType="com.jin.Board.Board">
-Select * from Board where no=#{writeNo}
-</select> 
-<select id="DetailReadAttach" parameterType="String" resultType="HashMap">
-
-	Select fno, no, systemfilename, originfilename from attachfile where fno=#{writeNo}
-
-</select>
-
-<select id="SelectBoard" resultType="com.jin.Board.Board">
-SELECT no, id, title, contents, writedate, hit
-    FROM(
-      SELECT LEVEL, no, id, LPAD(' ', 4*(LEVEL-1))||title as title,    contents, writeDate, nvl(readNo, 0) as hit, pno, depth,    ROWNUM AS RNUM
-      FROM(
-        SELECT b.no, id, title, contents,   writeDate,    h.readNo, nvl(rpl.pno, 0) as pno, 
-   nvl(rpl.depth, 0) as depth
-        FROM board b
-        LEFT JOIN Hits h
-        ON b.no = h.no
-        LEFT JOIN reply rpl
-        ON b.no = rpl.no
-      )
-      START WITH pno=0
-      CONNECT BY PRIOR no=pno
-      ORDER SIBLINGS BY no desc
-    )
-    </select>
-    
-<!--     <select id="SelectContetns" parameterType="int" resultType="com.jin.Board.Board">
-    select no, id, title, contents, writedate from board where no=#{no}
-    </select> -->
-    
-    <update id="UpdateContetns" parameterType="int" >
-    update board set title where no=#{no}
-    update board set contents where no=#{contents}
-    </update>
-    
-    <delete id="DeleteContetns" parameterType="int" >
-    delete board where no =#{no}
-    </delete>
-    
-    
-    <insert id="REPL" parameterType="com.jin.Board.Board">
-    	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-		SELECT nvl(max(no), 0)+1 FROM board
+	<insert id="Write" parameterType="com.jin.Board.Board">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT
+			nvl(max(no), 0)+1 FROM board
 		</selectKey>
-    INSERT INTO board where no = #{no}
-    
-    </insert>
+		INSERT INTO board(no, id, title, contents, writedate)
+		VALUES(#{no},#{id},#{title},#{contents},#{writedate})
+	</insert>
+	<insert id="AttachFile" parameterType="Map">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT
+			nvl(max(no), 0)+1 FROM attachfile
+		</selectKey>
+		INSERT INTO attachfile(no,systemFile,originFile,fno)
+		VALUES(#{no},#{systemFile},#{originFile},#{fno})
+	</insert>
+	<select id="SelectBoard" parameterType="Map" resultType="com.jin.Board.Board">
+		SELECT no, id, title, contents, writedate, hit
+		FROM(
+			SELECT LEVEL, no, id, LPAD(' ',	4*(LEVEL-1))||title as title, contents,
+			writeDate, nvl(readNo, 0) as hit, pno, depth, ROWNUM AS RNUM
+			FROM(
+				SELECT b.no, id, title, contents, writeDate, h.readNo, nvl(rpl.pno, 0) as	pno,
+				nvl(rpl.depth, 0) as depth
+				FROM board b
+				LEFT JOIN Hits h
+				ON b.no = h.no
+				LEFT JOIN reply rpl
+				ON b.no = rpl.no
+			)
+			<if test="searchName!=null">
+			<choose>
+				<when test="searchName=='all'">
+					WHERE title like '%'||#{searchWord}||'%'
+					OR id like '%'||#{searchWord}||'%'
+				</when>
+				<otherwise>
+					WHERE ${searchName} like '%'||#{searchWord}||'%'
+				</otherwise>
+			</choose>
+			</if>
+			START WITH pno=0
+			CONNECT BY PRIOR no=pno
+			ORDER SIBLINGS BY no desc
+		)
+<![CDATA[WHERE RNUM>=#{start} AND RNUM<=#{end}]]>
+	</select>
+	<select id="DetailRead" parameterType="String"
+		resultType="com.jin.Board.Board">
+		SELECT * FROM board
+		WHERE no=#{writeNo}
+	</select>
+	<select id="DetailReadAttach" parameterType="String"
+		resultType="HashMap">
+		SELECT * FROM attachfile
+		WHERE fno=#{writeNo}
+	</select>
+	<insert id="InsertReply" parameterType="HashMap">
+		<selectKey keyProperty="depth" resultType="int"
+			order="BEFORE">
+			select nvl(min(depth), 0)+1
+			from reply
+			where no=#{pno}
+		</selectKey>
+		INSERT INTO reply
+		VALUES(#{no},#{pno},#{depth})
+	</insert>
+	<update id="Modify" parameterType="com.jin.Board.Board">
+		UPDATE board
+		SET title =
+		#{title}, contents=#{contents}
+		WHERE no=#{no}
+	</update>
+	<insert id="Hits" parameterType="Map">
+		<selectKey keyProperty="readno" resultType="int"
+			order="BEFORE">
+			SELECT nvl(max(readno), 0)+1
+			FROM hits
+			WHERE no=#{no}
+		</selectKey>
+		<choose>
+			<when test="readno == 1">
+				INSERT INTO hits(no, readNo)
+				VALUES(#{no}, #{readno})
+			</when>
+			<otherwise>
+				UPDATE hits
+				SET readno=#{readno}
+				WHERE no=#{no}
+			</otherwise>
+		</choose>
+
+	</insert>
+	<delete id="Delete" parameterType="String">
+		DELETE FROM board
+		WHERE no=#{no}
+	</delete>
+	<select id="BoardCount" resultType="int">
+		SELECT COUNT(*) FROM board
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jin.Membership.IMemberDao">
-<select id="IsExistID" parameterType="String" resultType="int">
-SELECT COUNT(*)
-FROM login
-WHERE ID=#{id}
-</select>
-<insert id="InsertLogin" parameterType="com.jin.Membership.Login">
-INSERT INTO Login(id, pw)
-VALUES (#{id}, #{pw})
-</insert>
-<insert id="InsertMember" parameterType="com.jin.Membership.Member">
-INSERT INTO Member(id, gender, email)
-VALUES (#{id},#{gender},#{email})
-</insert>
-<select id="SearchZipcode" parameterType="String" resultType="com.jin.Membership.Zipcode">
-SELECT * FROM zipcode
-WHERE DONG like '%'||#{dong}||'%'
-OR DORO like '%'||#{doro}||'%'
-</select>
+	<select id="IsExistID" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM login
+		WHERE ID=#{id}
+	</select>
+	<insert id="InsertLogin"
+		parameterType="com.jin.Membership.Login">
+		INSERT INTO Login(id, pw)
+		VALUES (#{id}, #{pw})
+	</insert>
+	<insert id="InsertMember"
+		parameterType="com.jin.Membership.Member">
+		INSERT INTO Member(id, gender, email)
+		VALUES (#{id},#{gender},#{email})
+	</insert>
+	<select id="SearchZipcode" parameterType="String"
+		resultType="com.jin.Membership.Zipcode">
+		SELECT * FROM zipcode
+		WHERE DONG like '%'||#{dong}||'%'
+		OR DORO like '%'||#{doro}||'%'
+	</select>
 
-<insert id="InsertPostcode" parameterType="com.jin.Membership.Postcode">
-	<selectKey keyProperty="no" resultType="int" order="BEFORE">
-		SELECT nvl(max(no), 0)+1 FROM postcode
-	</selectKey>
-	INSERT INTO Postcode (no, zipcode, addr1, addr2, id)
-	VALUES (#{no},#{zipcode},#{addr1},#{addr2},#{id})
-</insert>
-
+	<insert id="InsertPostcode"
+		parameterType="com.jin.Membership.Postcode">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT nvl(max(no), 0)+1 FROM postcode
+		</selectKey>
+		INSERT INTO Postcode (no, zipcode, addr1, addr2, id)
+		VALUES (#{no},#{zipcode},#{addr1},#{addr2},#{id})
+	</insert>
+	<update id="Modify" parameterType="com.jin.Board.Board">
+		UPDATE board
+		SET title = #{title}, contents=#{contents}
+		WHERE no=#{no}
+	</update>
 </mapper>
+
+
+
+
+
+
+
+
+
+

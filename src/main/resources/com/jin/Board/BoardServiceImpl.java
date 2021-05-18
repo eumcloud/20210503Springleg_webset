@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.care.WebPage.BoardTools;
 import com.jin.Membership.Login;
 import com.jin.mail.SHA;
 
@@ -31,23 +32,29 @@ public class BoardServiceImpl implements IBoardService {
 	@Autowired private IBoardDao iBoardDao;
 
 	private final String UPLOADPATH = "/resources/upload/";
-	
+	private final int PAGEBLOCK = 10;
 	@Override
 	public void Write(Board board, HttpServletRequest request) {
 		Date writedate = new Date(System.currentTimeMillis());
 		board.setWritedate(writedate);
 		iBoardDao.Write(board);
-//		logger.warn(board.getNo()+"");
+		
 		List<Map<String, String>> fileLst = Upload(request);
 		
 		for(Map<String, String> fileMap : fileLst) {
 			fileMap.put("fno", board.getNo().toString());
 			iBoardDao.AttachFile(fileMap);
 		}
+		if(!"".contentEquals(request.getParameter("pno"))){
+			/*현재 글번호 - baord.getNo(), 부모 글번호 - pno*/
+			Map<String, Integer> replyMap = new HashMap<String, Integer>();
+			replyMap.put("no", board.getNo());
+			replyMap.put("pno", Integer.parseInt(request.getParameter("pno")) );
+			iBoardDao.InsertReply(replyMap);
+		}
 	}
 	private void DownloadFile(InputStream inputStream, String filePath, String fileName) {
-		logger.warn(filePath+UPLOADPATH+fileName+System.currentTimeMillis());
-		File file = new File(filePath+UPLOADPATH+fileName+System.currentTimeMillis());
+		File file = new File(filePath + UPLOADPATH + fileName);
 		try {
 			Files.copy(inputStream, file.toPath());
 		} catch (IOException e) {
@@ -88,45 +95,57 @@ public class BoardServiceImpl implements IBoardService {
 		return fileLst;
 	}
 	@Override
-	public List<Board> SelectBoard() {
-		List<Board> boardLst= iBoardDao.SelectBoard();
+	public List<Board> SelectBoard(HttpServletRequest request) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		int currentPage = 1;
+		String param = request.getParameter("currentPage");
+		if(param!=null)	currentPage = Integer.parseInt(param);
 		
-		return boardLst;
+		boardMap.put("start", 1+PAGEBLOCK*(currentPage-1));
+		boardMap.put("end", PAGEBLOCK*currentPage);
+		
+//		boardMap.put("searchName", "title");
+//		boardMap.put("searchWord", "a");
+		
+		return iBoardDao.SelectBoard(boardMap);
 	}
-	
-	
 	@Override
 	public Map<String, Object> DetailRead(String writeNo) {
-//		List<Map<String,Object>> attachLst = iBoardDao.DeatilReadAttach(writeNo);
-////		List<Board> read = iBoardDao.DetailRead(writeNo);
-//		logger.warn(attachLst.size()+"");
-//		for (Map<String, Object> attachMap : attachLst) {
-//			for(String key : attachMap.keySet());
-//				logger.warn(key +" : " + attachMap.get(key));	}
-		
-		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		boardMap.put("board", iBoardDao.DetailRead(writeNo));
-		boardMap.put("attachLst", iBoardDao.DeatilReadAttach(writeNo));
+		boardMap.put("attachLst", iBoardDao.DetailReadAttach(writeNo));
 		
-	
+		Map<String, Integer> hitsMap = new HashMap<String, Integer>();
+		hitsMap.put("no", Integer.parseInt(writeNo));
+		iBoardDao.Hits(hitsMap);
+		
 		return boardMap;
 	}
 	@Override
-	public void REPL(Board board, HttpServletRequest request) {
-		Date writedate = new Date(System.currentTimeMillis());
-		board.setWritedate(writedate);
-		iBoardDao.REPL(board);
-//		logger.warn(board.getNo()+"");
-		List<Map<String, String>> fileLst = Upload(request);
-		
-		for(Map<String, String> fileMap : fileLst) {
-			fileMap.put("fno", board.getNo().toString());
-			iBoardDao.AttachFile(fileMap);
-		}
+	public void Modify(Board board) {
+		iBoardDao.Modify(board);
 	}
-	
-	
+	@Override
+	public void Delete(String no) {
+		iBoardDao.Delete(no);
+	}
+	@Override
+	public void Deletes(String[] chkboxs) {
+		for(String no : chkboxs)
+			iBoardDao.Delete(no);
+	}
+	@Override
+	public String getNavi(HttpServletRequest request) {
+		int currentPage=1;
+		String param = request.getParameter("currentPage");
+		if(param!=null)	currentPage = Integer.parseInt(param);
+		
+		int totalPage=iBoardDao.BoardCount();
+		String url=request.getContextPath()+"/board/boardProc?currentPage=";
+		
+		String tag = BoardTools.getNavi(currentPage, PAGEBLOCK, totalPage, url);
+		return tag;
+	}
 }
 
 
