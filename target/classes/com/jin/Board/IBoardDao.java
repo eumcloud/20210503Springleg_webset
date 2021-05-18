@@ -13,5 +13,5 @@ public interface IBoardDao {
 	public void Modify(Board board);
 	public void Hits(Map<String, Integer> hitsMap);
 	public void Delete(String no);
-	public int BoardCount();
+	public int BoardCount(Map<String, Object> boardMap);
 }

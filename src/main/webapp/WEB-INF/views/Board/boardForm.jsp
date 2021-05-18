@@ -80,13 +80,15 @@ ${navi }
 <table>
 <tr>
 <td>
-	<select>
-		<option>전체</option>
-		<option>제목</option>
-		<option>작성자</option>
+<form id="frm" action="${home }board/boardProc" method="post">
+	<select name="searchName">
+		<option value="all">전체</option>
+		<option value="title">제목</option>
+		<option value="id">작성자</option>
 	</select>
-	<input type=text name='search'/>
-	<input type=button name='searchBtn' value='검색' style="width: 80px; "/>
+	<input type=text name='searchWord'/>
+	<input type="submit" name='searchBtn' value='검색' style="width: 80px; "/>
+</form>
 </td>
 </tr>
 </table>

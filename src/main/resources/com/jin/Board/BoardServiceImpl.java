@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -96,17 +97,12 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	@Override
 	public List<Board> SelectBoard(HttpServletRequest request) {
-		Map<String, Object> boardMap = new HashMap<String, Object>();
-		int currentPage = 1;
-		String param = request.getParameter("currentPage");
-		if(param!=null)	currentPage = Integer.parseInt(param);
+		Map<String, Object> boardMap = getSearchMap(request);	
+		int currentPage = getCurrentPage(request);
 		
 		boardMap.put("start", 1+PAGEBLOCK*(currentPage-1));
 		boardMap.put("end", PAGEBLOCK*currentPage);
-		
-//		boardMap.put("searchName", "title");
-//		boardMap.put("searchWord", "a");
-		
+
 		return iBoardDao.SelectBoard(boardMap);
 	}
 	@Override
@@ -134,14 +130,36 @@ public class BoardServiceImpl implements IBoardService {
 		for(String no : chkboxs)
 			iBoardDao.Delete(no);
 	}
-	@Override
-	public String getNavi(HttpServletRequest request) {
-		int currentPage=1;
+	private int getCurrentPage(HttpServletRequest request) {
+		int currentPage = 1;
 		String param = request.getParameter("currentPage");
 		if(param!=null)	currentPage = Integer.parseInt(param);
 		
-		int totalPage=iBoardDao.BoardCount();
-		String url=request.getContextPath()+"/board/boardProc?currentPage=";
+		return currentPage;
+	}
+	private Map<String, Object> getSearchMap(HttpServletRequest request) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		String searchName = request.getParameter("searchName");
+		if(searchName != null) {
+			boardMap.put("searchName", searchName);
+			String searchWord = request.getParameter("searchWord");
+			boardMap.put("searchWord", searchWord);
+		}
+		return boardMap;
+	}
+	@Override
+	public String getNavi(HttpServletRequest request) {
+		Map<String, Object> boardMap = getSearchMap(request);
+		int currentPage = getCurrentPage(request);
+		
+		int totalPage=iBoardDao.BoardCount(boardMap);
+		String url=request.getContextPath()+"/board/boardProc?";
+		if(boardMap.get("searchName")!=null) {
+			url+="searchName="+boardMap.get("searchName")+"&";
+			url+="searchWord="+boardMap.get("searchWord")+"&";	
+		}
+		url+="currentPage=";
 		
 		String tag = BoardTools.getNavi(currentPage, PAGEBLOCK, totalPage, url);
 		return tag;

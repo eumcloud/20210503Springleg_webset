@@ -100,6 +100,17 @@
 	</delete>
 	<select id="BoardCount" resultType="int">
 		SELECT COUNT(*) FROM board
+		<if test="searchName!=null">
+		<choose>
+			<when test="searchName=='all'">
+				WHERE title like '%'||#{searchWord}||'%'
+				OR id like '%'||#{searchWord}||'%'
+			</when>
+			<otherwise>
+				WHERE ${searchName} like '%'||#{searchWord}||'%'
+			</otherwise>
+		</choose>
+		</if>
 	</select>
 </mapper>
 
